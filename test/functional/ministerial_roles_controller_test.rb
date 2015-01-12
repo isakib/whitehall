@@ -45,9 +45,9 @@ class MinisterialRolesControllerTest < ActionController::TestCase
     role_3 = create(:board_member_role, name: 'Chief Griller', organisations: [organisation], seniority: 3)
     role_4 = create(:ministerial_role, name: 'First Secretary of State', cabinet_member: true, organisations: [organisation], seniority: 2)
 
-    organisation.organisation_roles.find_by_role_id(role_2.id).update_column(:ordering, 3)
-    organisation.organisation_roles.find_by_role_id(role_1.id).update_column(:ordering, 2)
-    organisation.organisation_roles.find_by_role_id(role_4.id).update_column(:ordering, 1)
+    organisation.organisation_roles.find_by(role_id: role_2.id).update_column(:ordering, 3)
+    organisation.organisation_roles.find_by(role_id: role_1.id).update_column(:ordering, 2)
+    organisation.organisation_roles.find_by(role_id: role_4.id).update_column(:ordering, 1)
 
     appointment_2 = create(:ministerial_role_appointment, role: role_2, person: person_2)
     appointment_1 = create(:ministerial_role_appointment, role: role_1, person: person_1)
@@ -95,7 +95,7 @@ class MinisterialRolesControllerTest < ActionController::TestCase
 
     get :index
 
-    whips = [[Whitehall::WhipOrganisation.find_by_id(1), RolesPresenter.new([role_3], @controller.view_context)]]
+    whips = [[Whitehall::WhipOrganisation.find_by(id: 1), RolesPresenter.new([role_3], @controller.view_context)]]
 
     assert_equal whips, assigns(:whips_by_organisation)
   end
@@ -124,11 +124,11 @@ class MinisterialRolesControllerTest < ActionController::TestCase
     get :index
 
     whips = [
-      [Whitehall::WhipOrganisation.find_by_id(1), RolesPresenter.new([role_1], @controller.view_context)],
-      [Whitehall::WhipOrganisation.find_by_id(3), RolesPresenter.new([role_3], @controller.view_context)],
-      [Whitehall::WhipOrganisation.find_by_id(4), RolesPresenter.new([role_4], @controller.view_context)],
-      [Whitehall::WhipOrganisation.find_by_id(2), RolesPresenter.new([role_2], @controller.view_context)],
-      [Whitehall::WhipOrganisation.find_by_id(5), RolesPresenter.new([role_5], @controller.view_context)]
+      [Whitehall::WhipOrganisation.find_by(id: 1), RolesPresenter.new([role_1], @controller.view_context)],
+      [Whitehall::WhipOrganisation.find_by(id: 3), RolesPresenter.new([role_3], @controller.view_context)],
+      [Whitehall::WhipOrganisation.find_by(id: 4), RolesPresenter.new([role_4], @controller.view_context)],
+      [Whitehall::WhipOrganisation.find_by(id: 2), RolesPresenter.new([role_2], @controller.view_context)],
+      [Whitehall::WhipOrganisation.find_by(id: 5), RolesPresenter.new([role_5], @controller.view_context)]
     ]
     assert_equal whips, assigns(:whips_by_organisation)
   end

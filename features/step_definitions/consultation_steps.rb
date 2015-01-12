@@ -10,7 +10,7 @@ When /^I draft a new consultation "([^"]*)"$/ do |title|
   select_date 1.day.ago.to_s, from: "Opening Date"
   select_date 6.days.from_now.to_s, from: "Closing Date"
 
-  within record_css_selector(Nation.find_by_name!("Wales")) do
+  within record_css_selector(Nation.find_by!(name: "Wales")) do
     check "Wales"
     fill_in "Alternative url", with: "http://www.visitwales.co.uk/"
   end
