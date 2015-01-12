@@ -23,10 +23,10 @@ class Organisation < ActiveRecord::Base
   has_many :edition_organisations, dependent: :destroy
   has_many :editions, through: :edition_organisations
 
-  has_many :statistics_announcement_organisations, dependent: :destroy
+  has_many :statistics_announcement_organisations, inverse_of: :organisation, dependent: :destroy
   has_many :statistics_announcements, through: :statistics_announcement_organisations
 
-  has_many :organisation_roles
+  has_many :organisation_roles, inverse_of: :organisation
   has_many :roles, through: :organisation_roles
   has_many :groups
   has_many :ministerial_roles,
