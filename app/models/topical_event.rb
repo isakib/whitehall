@@ -18,21 +18,21 @@ class TopicalEvent < Classification
   has_many :consultations, through: :classification_memberships
 
   has_many :published_announcements,
+            -> { published_scope },
             through: :classification_memberships,
             class_name: "Announcement",
-            conditions: { "editions.state" => "published" },
             source: :announcement
 
   has_many :published_publications,
+            -> { published_scope },
             through: :classification_memberships,
             class_name: "Publication",
-            conditions: { "editions.state" => "published" },
             source: :publication
 
   has_many :published_consultations,
+            -> { published_scope },
             through: :classification_memberships,
             class_name: "Consultation",
-            conditions: { "editions.state" => "published" },
             source: :consultation
 
   scope :active, -> { where("end_date > ?", Date.today) }
@@ -44,6 +44,10 @@ class TopicalEvent < Classification
   accepts_nested_attributes_for :social_media_accounts, allow_destroy: true
 
   alias_method :display_name, :to_s
+
+  def self.published_scope
+    where("editions.state" => "published")
+  end
 
   def archived?
     if end_date && end_date <= Date.today
