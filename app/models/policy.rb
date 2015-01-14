@@ -68,10 +68,6 @@ class Policy < Edition
     true
   end
 
-  def update_published_related_publication_count
-    update_column(:published_related_publication_count, published_related_publications.count)
-  end
-
   def translatable?
     true
   end
