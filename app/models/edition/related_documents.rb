@@ -4,6 +4,7 @@ module Edition::RelatedDocuments
   class Trait < Edition::Traits::Trait
     def process_associations_after_save(edition)
       edition.related_documents = @edition.related_documents
+      edition.reload
     end
   end
 
