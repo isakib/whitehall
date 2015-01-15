@@ -8,7 +8,7 @@ module EditionPresenterHelper
       url: url,
       organisations: display_organisations.html_safe,
       display_date_microformat: display_date_microformat,
-      public_timestamp: model.public_timestamp
+      public_timestamp: model.public_timestamp.iso8601
     }
   end
 
